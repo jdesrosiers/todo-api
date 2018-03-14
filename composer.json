@@ -1,0 +1,15 @@
+{
+    "name": "jdesrosiers/todo-api",
+    "description": "An example of a Hypermedia API",
+    "type": "project",
+    "require": {
+        "jdesrosiers/resourceful": "dev-master"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jason Desrosiers",
+            "email": "jdesrosi@gmail.com"
+        }
+    ]
+}
