@@ -236,16 +236,16 @@
         },
         {
             "name": "jdesrosiers/silex-cors-provider",
-            "version": "v1.5.0",
+            "version": "v1.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jdesrosiers/silex-cors-provider.git",
-                "reference": "d91666647b87ffa29cb6db46e3df58cbe519ef1f"
+                "reference": "ce97ca190046e2ea5cbb2d26b89e1cb13c2eda8c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jdesrosiers/silex-cors-provider/zipball/d91666647b87ffa29cb6db46e3df58cbe519ef1f",
-                "reference": "d91666647b87ffa29cb6db46e3df58cbe519ef1f",
+                "url": "https://api.github.com/repos/jdesrosiers/silex-cors-provider/zipball/ce97ca190046e2ea5cbb2d26b89e1cb13c2eda8c",
+                "reference": "ce97ca190046e2ea5cbb2d26b89e1cb13c2eda8c",
                 "shasum": ""
             },
             "require": {
@@ -282,7 +282,7 @@
                 "sharing",
                 "silex"
             ],
-            "time": "2017-10-20T03:30:29+00:00"
+            "time": "2018-03-25T18:22:39+00:00"
         },
         {
             "name": "jdesrosiers/silex-json-schema-provider",
@@ -530,16 +530,16 @@
         },
         {
             "name": "silex/silex",
-            "version": "v2.2.3",
+            "version": "v2.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/silexphp/Silex.git",
-                "reference": "90c80c3e5ef86c54b8769feca0320154c6e63f7c"
+                "reference": "d2531e5b8099c429b752ad2154e85999c3689057"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/silexphp/Silex/zipball/90c80c3e5ef86c54b8769feca0320154c6e63f7c",
-                "reference": "90c80c3e5ef86c54b8769feca0320154c6e63f7c",
+                "url": "https://api.github.com/repos/silexphp/Silex/zipball/d2531e5b8099c429b752ad2154e85999c3689057",
+                "reference": "d2531e5b8099c429b752ad2154e85999c3689057",
                 "shasum": ""
             },
             "require": {
@@ -615,7 +615,7 @@
             "keywords": [
                 "microframework"
             ],
-            "time": "2018-02-25T11:21:42+00:00"
+            "time": "2018-03-16T23:34:20+00:00"
         },
         {
             "name": "symfony/debug",
@@ -1125,16 +1125,16 @@
         },
         {
             "name": "twig/twig",
-            "version": "v1.35.2",
+            "version": "v1.35.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "9c24f2cd39dc1906b76879e099970b7e53724601"
+                "reference": "b48680b6eb7d16b5025b9bfc4108d86f6b8af86f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/9c24f2cd39dc1906b76879e099970b7e53724601",
-                "reference": "9c24f2cd39dc1906b76879e099970b7e53724601",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/b48680b6eb7d16b5025b9bfc4108d86f6b8af86f",
+                "reference": "b48680b6eb7d16b5025b9bfc4108d86f6b8af86f",
                 "shasum": ""
             },
             "require": {
@@ -1142,8 +1142,8 @@
             },
             "require-dev": {
                 "psr/container": "^1.0",
-                "symfony/debug": "~2.7",
-                "symfony/phpunit-bridge": "~3.3@dev"
+                "symfony/debug": "^2.7",
+                "symfony/phpunit-bridge": "^3.3"
             },
             "type": "library",
             "extra": {
@@ -1186,7 +1186,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2018-03-03T16:21:29+00:00"
+            "time": "2018-03-20T04:25:58+00:00"
         }
     ],
     "packages-dev": [],
