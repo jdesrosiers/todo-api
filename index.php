@@ -11,7 +11,7 @@ require __DIR__ . "/vendor/autoload.php";
 
 $app = new Resourceful();
 $app["debug"] = true;
-$app["cors.exposeHeaders"] = "if-modified-since location link";
+$app["cors.exposeHeaders"] = "if-modified-since, location, link";
 
 $static = new FileCache(__DIR__ . "/static");
 
@@ -19,7 +19,8 @@ $static = new FileCache(__DIR__ . "/static");
 $app->get("/", new GetResourceController($static))
     ->after($app["allow"])
     ->after(function (Request $request, Response $response) {
-        $response->headers->set("Link", "</foo>; rel=\"foo\"");
+        $response->headers->set("Link", "</foo>; rel=\"foo\"; title=\"Foo\"", false);
+        $response->headers->set("Link", "</bar>; rel=\"bar\"; title=\"Bar\"", false);
     });
 
 // Initialize CORS support
