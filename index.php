@@ -18,15 +18,20 @@ $static = new FileCache(__DIR__ . "/static");
 
 // Register Controllers
 $app->get("/", new GetResourceController($static))
-    ->after($app["allow"])
     ->after(function (Request $request, Response $response) {
         $rel = $request->getSchemeAndHttpHost() . "/rel/todo";
         $response->headers->set("Link", "</todo/1>; rel=\"$rel\"; title=\"TODO List\"", false);
     });
 
-$app->get("/todo/{id}", new GetResourceController($data))
-    ->after($app["allow"]);
+$app->get("/todo/{id}", new GetResourceController($data));
 $app->delete("/todo/{id}", new DeleteResourceController($data));
+
+// Generate Allow headers for all GET requests
+$app->after(function ($request, $response, $app) {
+    if ($request->getMethod() === "GET") {
+        return $app["allow"]($request, $response, $app);
+    }
+});
 
 // Initialize CORS support
 $app["cors-enabled"]($app);
