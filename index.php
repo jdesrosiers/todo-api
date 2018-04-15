@@ -28,7 +28,7 @@ $app->delete("/todo/{id}", new DeleteResourceController($data));
 
 // Generate Allow headers for all GET requests
 $app->after(function ($request, $response, $app) {
-    if ($request->getMethod() === "GET") {
+    if ($response->isSuccessful() && $request->getMethod() === "GET") {
         return $app["allow"]($request, $response, $app);
     }
 });
