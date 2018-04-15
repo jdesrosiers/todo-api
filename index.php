@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 require __DIR__ . "/vendor/autoload.php";
 
 $app = new Resourceful();
-$app["debug"] = true;
+//$app["debug"] = true;
 $app["cors.exposeHeaders"] = "allow, if-modified-since, link, location";
 
 $data = new FileCache(__DIR__ . "/data");
