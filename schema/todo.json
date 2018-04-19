@@ -1,0 +1,14 @@
+{
+    "$schema": "http://json-schema.org/draft-04/hyper-schema#",
+    "title": "TODO List",
+    "type": "object",
+    "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "items": {
+            "type": "array",
+            "items": { "type": "string" }
+        }
+    },
+    "required": ["id", "title", "items"]
+}
