@@ -31,9 +31,9 @@ $app->get("/todo/{id}", new GetResourceController($data));
 $app->delete("/todo/{id}", new DeleteResourceController($data));
 $app->put("/todo/{id}", new PutResourceController($data, $schema));
 
-// Generate Allow headers for all GET requests
+// Generate Allow headers for all GET and PUT requests
 $app->after(function ($request, $response, $app) {
-    if ($response->isSuccessful() && $request->getMethod() === "GET") {
+    if ($response->isSuccessful() && in_array($request->getMethod(), ["GET", "PUT"])) {
         return $app["allow"]($request, $response, $app);
     }
 });
