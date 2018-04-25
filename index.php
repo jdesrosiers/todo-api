@@ -42,13 +42,6 @@ $resource->delete("/{id}", new DeleteResourceController($data));
 $resource->put("/{id}", new PutResourceController($data, $schema));
 $app->mount("/todo", $resource);
 
-// Generate Allow headers for all GET and PUT requests
-$app->after(function (Request $request, Response $response, Resourceful $app) {
-    if ($response->isSuccessful() && in_array($request->getMethod(), ["GET", "PUT"])) {
-        return $app["allow"]($request, $response, $app);
-    }
-});
-
 // Initialize CORS support
 $app["cors-enabled"]($app);
 

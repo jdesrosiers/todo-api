@@ -129,12 +129,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/jdesrosiers/resourceful.git",
-                "reference": "9801e83b9a4cd1dd8d027912031f159f508822fe"
+                "reference": "bedb8cb26a7ba455b53fe0e81b1450f826347738"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jdesrosiers/resourceful/zipball/9801e83b9a4cd1dd8d027912031f159f508822fe",
-                "reference": "9801e83b9a4cd1dd8d027912031f159f508822fe",
+                "url": "https://api.github.com/repos/jdesrosiers/resourceful/zipball/bedb8cb26a7ba455b53fe0e81b1450f826347738",
+                "reference": "bedb8cb26a7ba455b53fe0e81b1450f826347738",
                 "shasum": ""
             },
             "require": {
@@ -179,7 +179,7 @@
                 "rest",
                 "silex"
             ],
-            "time": "2018-04-24T04:45:44+00:00"
+            "time": "2018-04-25T01:51:34+00:00"
         },
         {
             "name": "jdesrosiers/silex-conneg-provider",
