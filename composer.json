@@ -3,7 +3,8 @@
     "description": "An example of a Hypermedia API",
     "type": "project",
     "require": {
-        "jdesrosiers/resourceful": "dev-master"
+        "jdesrosiers/resourceful": "dev-master",
+        "mongodb/mongodb": "^1.3"
     },
     "license": "MIT",
     "authors": [
@@ -11,5 +12,8 @@
             "name": "Jason Desrosiers",
             "email": "jdesrosi@gmail.com"
         }
-    ]
+    ],
+    "require-dev": {
+        "symfony/browser-kit": "^4.1"
+    }
 }

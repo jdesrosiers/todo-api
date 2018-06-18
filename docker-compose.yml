@@ -1,0 +1,26 @@
+version: '3'
+
+volumes:
+  vendor:
+
+services:
+  web:
+    build:
+      context: .
+    volumes:
+      - .:/app
+      - vendor:/app/vendor
+      - ./vendor:/for_docker_host/vendor
+    depends_on:
+      - mongodb
+    ports:
+      - "8000:8000"
+    environment:
+      - MONGODB_DBNAME=hypermedia-todo
+      - MONGODB_URI=mongodb://mongodb:27017
+    command: php -S 0.0.0.0:8000 index.php
+
+  mongodb:
+    image: mongo:3.6.5
+    ports:
+      - "27017:27017"

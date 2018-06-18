@@ -9,5 +9,14 @@
         "description": {
             "type": "string"
         }
-    }
+    },
+    "links": [
+        { "rel": "self", "href": "/" },
+        {
+            "title": "Create TODO",
+            "rel": "create",
+            "href": "/task/",
+            "schema": { "$ref": "/schema/task" }
+        }
+    ]
 }

@@ -1,0 +1,28 @@
+{
+    "$schema": "http://json-schema.org/draft-04/hyper-schema",
+    "type": "object",
+    "properties": {
+        "id": {
+            "type": "string",
+            "links": [{ "rel": "full", "href": "/task/{$}" }],
+            "readOnly": true
+        },
+        "text": { "type": "string" },
+        "completed": { "type": "boolean", "default": false }
+    },
+    "required": ["text", "completed"],
+    "links": [
+        { "rel": "self", "href": "/task/{id}" },
+        {
+            "title": "Edit",
+            "rel": "edit",
+            "href": "/task/{id}",
+            "__encType": [
+                "application/json",
+                "application/json-patch+json",
+                "application/merge-patch+json"
+            ]
+        },
+        { "title": "Delete", "rel": "delete", "href": "/task/{id}" }
+    ]
+}
