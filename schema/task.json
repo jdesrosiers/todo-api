@@ -7,8 +7,8 @@
             "links": [{ "rel": "full", "href": "/task/{$}" }],
             "readOnly": true
         },
-        "text": { "type": "string" },
-        "completed": { "type": "boolean", "default": false }
+        "completed": { "type": "boolean", "default": false },
+        "text": { "type": "string" }
     },
     "required": ["text", "completed"],
     "links": [
@@ -17,12 +17,13 @@
             "title": "Edit",
             "rel": "edit",
             "href": "/task/{id}",
-            "__encType": [
+            "_encType_": [
                 "application/json",
                 "application/json-patch+json",
                 "application/merge-patch+json"
             ]
         },
-        { "title": "Delete", "rel": "delete", "href": "/task/{id}" }
+        { "title": "Delete", "rel": "delete", "href": "/task/{id}" },
+        { "title": "Tasks", "rel": "instances", "href": "/task/" }
     ]
 }

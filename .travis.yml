@@ -1,9 +1,15 @@
 language: php
 php:
   - '7.1'
+services:
+  - mongodb
 cache:
   directories:
     - vendor
+before_script:
+  - pecl install mongodb
+  - echo "extension=mongo.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+  - composer install
 deploy:
   provider: heroku
   api_key:

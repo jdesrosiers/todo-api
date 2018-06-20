@@ -3,15 +3,16 @@
     "title": "Index",
     "type": "object",
     "properties": {
-        "title": {
-            "type": "string"
-        },
-        "description": {
-            "type": "string"
-        }
+        "title": { "type": "string" },
+        "description": { "type": "string" }
     },
     "links": [
         { "rel": "self", "href": "/" },
+        {
+            "title": "List Tasks",
+            "rel": "https://hypermedia-todo.herokuapp.com/rel/task",
+            "href": "/task/"
+        },
         {
             "title": "Create Task",
             "rel": "create",
