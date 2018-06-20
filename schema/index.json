@@ -13,7 +13,7 @@
     "links": [
         { "rel": "self", "href": "/" },
         {
-            "title": "Create TODO",
+            "title": "Create Task",
             "rel": "create",
             "href": "/task/",
             "schema": { "$ref": "/schema/task" }

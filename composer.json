@@ -13,7 +13,10 @@
             "email": "jdesrosi@gmail.com"
         }
     ],
+    "autoload": {
+        "psr-4": { "JDesrosiers\\HypermediaTasks\\": "src/" }
+    },
     "require-dev": {
-        "symfony/browser-kit": "^4.1"
+        "phpunit/phpunit": "^7.2"
     }
 }
