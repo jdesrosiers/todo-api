@@ -5,7 +5,7 @@ namespace JDesrosiers\HypermediaTasks;
 use Doctrine\Common\Cache\Cache;
 use MongoDB\Client;
 
-class MongoDbCache implements Cache
+class MongoDbStore implements Cache
 {
     private $collection;
 
