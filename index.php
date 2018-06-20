@@ -1,6 +1,8 @@
 <?php
 
-use JDesrosiers\HypermediaTasks\MongoDbCache;
+use JDesrosiers\HypermediaTasks\MongoDbCollectionStore;
+use JDesrosiers\HypermediaTasks\MongoDbStore;
+use JDesrosiers\Resourceful\Controller\GetResourceController;
 use JDesrosiers\Resourceful\CrudControllerProvider\CrudControllerProvider;
 use JDesrosiers\Resourceful\FileCache\FileCache;
 use JDesrosiers\Resourceful\IndexControllerProvider\IndexControllerProvider;
@@ -21,6 +23,8 @@ $app->register(new ResourcefulServiceProvider(), [
     "resourceful.schema-dir" => __DIR__
 ]);
 
+$dbUri = getenv("MONGODB_URI");
+$dbname = getenv("MONGODB_DBNAME");
 $static = new FileCache(__DIR__ . "/static");
 
 // Register Supporting Controllers
@@ -29,24 +33,14 @@ $app->flush();
 $app->mount("/", new IndexControllerProvider($static));
 
 // Register Controllers
-$dbUri = getenv("MONGODB_URI");
-$dbname = getenv("MONGODB_DBNAME");
-$tasks = (new MongoDB\Client($dbUri))->$dbname->{"/schema/task"};
-$data = new MongoDbCache($dbUri, $dbname, "/schema/task");
-$app->mount("/task", new CrudControllerProvider("task", $data));
-$app->get("/task/", function (Resourceful $app, Request $request) use ($tasks) {
-    $app["json-schema.describedBy"] = "/schema/task-list";
+$taskData = new MongoDbStore($dbUri, $dbname, "/task/");
+$app->mount("/task", new CrudControllerProvider("task", $taskData));
 
-    $resource = [
-        "list" => array_map(function ($task) use ($data) {
-            unset($task["_id"]);
-            return $task;
-        }, $tasks->find()->toArray())
-    ];
-
-    $response = JsonResponse::create($resource);
-    return $app["allow"]($request, $response, $app);
-});
+$taskListData = new MongoDbCollectionStore($dbUri, $dbname);
+$app->get("/task/", new GetResourceController($taskListData))
+    ->after(function() use ($app) {
+        $app["json-schema.describedBy"] = "/schema/task-list";
+    });
 
 // Initialize CORS support
 $app["cors-enabled"]($app);

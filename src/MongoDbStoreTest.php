@@ -5,7 +5,7 @@ namespace JDesrosiers\HypermediaTasks;
 use MongoDB\Client;
 use PHPUnit\Framework\TestCase;
 
-class MongoDbCacheTest extends TestCase
+class MongoDbStoreTest extends TestCase
 {
     private static $dbName;
     private static $client;
@@ -16,7 +16,7 @@ class MongoDbCacheTest extends TestCase
         self::$dbName = getenv("MONGODB_DBNAME");
         $dbUri = getenv("MONGODB_URI");
         self::$client = new Client($dbUri);
-        self::$service = new MongoDbCache($dbUri, self::$dbName, "testCollection");
+        self::$service = new MongoDbStore($dbUri, self::$dbName, "testCollection");
         self::resetDb();
     }
 
