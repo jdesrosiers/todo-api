@@ -7,14 +7,16 @@ use PHPUnit\Framework\TestCase;
 
 class MongoDbCacheTest extends TestCase
 {
+    private static $dbName;
     private static $client;
     private static $service;
 
     public static function setUpBeforeClass()
     {
+        self::$dbName = getenv("MONGODB_DBNAME");
         $dbUri = getenv("MONGODB_URI");
         self::$client = new Client($dbUri);
-        self::$service = new MongoDbCache($dbUri, "test", "testCollection");
+        self::$service = new MongoDbCache($dbUri, self::$dbName, "testCollection");
         self::resetDb();
     }
 
@@ -25,7 +27,7 @@ class MongoDbCacheTest extends TestCase
 
     private static function resetDb()
     {
-        self::$client->test->testCollection->deleteMany([]);
+        self::$client->{self::$dbName}->dropCollection("testCollection");
     }
 
     public function testStoreNewObject()

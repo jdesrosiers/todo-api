@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/jdesrosiers/todo-api.svg?branch=master)](https://travis-ci.org/jdesrosiers/todo-api)
+[![Heroku CI Status](https://ci-badges.herokuapp.com/pipelines/f9c4543a-2d69-4cef-bae9-f86cff384d41/master.svg)](https://dashboard.heroku.com/pipelines/f9c4543a-2d69-4cef-bae9-f86cff384d41/tests)
 
 TODO API
 ========
