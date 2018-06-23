@@ -26,7 +26,12 @@ class MongoDbCollectionStoreTest extends TestCase
     {
         self::$collection->drop();
         self::$collection->insertMany([
-            ["foo" => "bar"]
+            ["aaa" => 111],
+            ["bbb" => 222],
+            ["ccc" => 333],
+            ["ddd" => 444],
+            ["eee" => 555],
+            ["fff" => 666]
         ]);
     }
 
@@ -40,14 +45,36 @@ class MongoDbCollectionStoreTest extends TestCase
         self::$collection->drop();
     }
 
-    public function testFetchAList()
+    public function testFetchTheFirstPageOfItems()
     {
         $expect = [
             "list" => [
-                ["foo" => "bar"]
-            ]
+                ["aaa" => 111],
+                ["bbb" => 222],
+                ["ccc" => 333],
+                ["ddd" => 444],
+                ["eee" => 555]
+            ],
+            "page" => 0,
+            "limit" => 5,
+            "nextPage" => 1
         ];
-        $this->assertEquals($expect, self::$service->fetch(self::$listName));
+        $this->assertEquals($expect, self::$service->fetch(self::$listName . "?page=0&limit=5"));
+    }
+
+    public function testFetchTheSecondPageOfItems()
+    {
+        $expect = [
+            "list" => [
+                ["eee" => 555],
+                ["fff" => 666]
+            ],
+            "page" => 1,
+            "limit" => 4,
+            "nextPage" => 2,
+            "prevPage" => 0
+        ];
+        $this->assertEquals($expect, self::$service->fetch(self::$listName . "?page=1&limit=4"));
     }
 
     //public function testReplaceObject()
@@ -62,15 +89,18 @@ class MongoDbCollectionStoreTest extends TestCase
     public function testRetrieveNonexistentObject()
     {
         $expected = [
-            "list" => []
+            "list" => [],
+            "page" => 0,
+            "limit" => 5,
+            "nextPage" => 1
         ];
-        $this->assertEquals($expected, self::$service->fetch("/some-list/"));
+        $this->assertEquals($expected, self::$service->fetch("/some-list/?page=0&limit=5"));
     }
 
     public function testDeleteObject()
     {
-        $this->assertTrue(self::$service->delete(self::$listName));
-        $this->assertEquals(0, self::$collection->count());
+        $this->assertTrue(self::$service->delete(self::$listName . "?page=0&limit=5"));
+        $this->assertEquals(1, self::$collection->count());
     }
 
     public function testGetStats()

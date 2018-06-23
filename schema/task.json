@@ -24,6 +24,11 @@
             ]
         },
         { "title": "Delete", "rel": "delete", "href": "/task/{id}" },
-        { "title": "Tasks", "rel": "instances", "href": "/task/" }
+        {
+            "title": "Tasks",
+            "rel": "instances",
+            "href": "/task/",
+            "schema": { "$ref": "/schema/task-search" }
+        }
     ]
 }

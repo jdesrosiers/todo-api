@@ -5,10 +5,16 @@
         "list": {
             "type": "array",
             "items": { "$ref": "/schema/task" }
-        }
+        },
+        "page": { "type": "integer", "readOnly": true },
+        "limit": { "type": "integer", "readOnly": true },
+        "nextPage": { "type": "integer", "readOnly": true },
+        "prevPage": { "type": "integer", "readOnly": true }
     },
     "links": [
-        { "rel": "self", "href": "/task/" },
-        { "title": "Delete", "rel": "delete", "href": "/task/" }
+        { "rel": "self", "href": "/task/{?page,limit}" },
+        { "title": "Delete", "rel": "delete", "href": "/task/{?page,limit}" },
+        { "rel": "previous", "href": "/task/?page={prevPage}{&limit}" },
+        { "rel": "next", "href": "/task/?page={nextPage}{&limit}" }
     ]
 }
