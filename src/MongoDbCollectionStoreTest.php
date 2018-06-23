@@ -67,15 +67,11 @@ class MongoDbCollectionStoreTest extends TestCase
         $this->assertEquals($expected, self::$service->fetch("/some-list/"));
     }
 
-    //public function testDeleteObject()
-    //{
-        //$this->assertTrue(self::$service->delete(self::$listName));
-
-        //$expected = [
-            //"list" => []
-        //];
-        //$this->assertEquals($expected, self::$service->fetch(self::$listName));
-    //}
+    public function testDeleteObject()
+    {
+        $this->assertTrue(self::$service->delete(self::$listName));
+        $this->assertEquals(0, self::$collection->count());
+    }
 
     public function testGetStats()
     {

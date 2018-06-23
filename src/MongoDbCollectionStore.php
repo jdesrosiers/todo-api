@@ -17,11 +17,13 @@ class MongoDbCollectionStore implements Cache
 
     public function fetch($id)
     {
+        $collection = $this->db->$id;
+
         return [
             "list" => array_map(function ($task) {
                 unset($task["_id"]);
                 return iterator_to_array($task);
-            }, $this->db->$id->find()->toArray())
+            }, $collection->find()->toArray())
         ];
     }
 
@@ -43,9 +45,8 @@ class MongoDbCollectionStore implements Cache
 
     public function delete($id)
     {
-        //$this->db->dropCollection($id);
-        //return true;
-        return false;
+        $this->db->dropCollection($id);
+        return true;
     }
 
     public function getStats()
