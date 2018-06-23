@@ -32,18 +32,20 @@ class MongoDbCollectionStore implements Cache
 
     public function save($id, $data, $lifeTime = null)
     {
-        $this->db->createCollection($id);
-        foreach ($data["list"] as $item) {
-            $this->db->$id->replaceOne(["_id" => $item["id"]], $item, ["upsert" => true]);
-        }
+        //$this->db->dropCollection($id);
+        //foreach ($data["list"] as $item) {
+            //$this->db->$id->replaceOne(["_id" => $item["id"]], $item, ["upsert" => true]);
+        //}
 
-        return true;
+        //return true;
+        return false;
     }
 
     public function delete($id)
     {
-        $this->db->dropCollection($id);
-        return true;
+        //$this->db->dropCollection($id);
+        //return true;
+        return false;
     }
 
     public function getStats()

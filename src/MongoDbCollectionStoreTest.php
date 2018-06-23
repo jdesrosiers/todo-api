@@ -7,36 +7,47 @@ use PHPUnit\Framework\TestCase;
 
 class MongoDbCollectionStoreTest extends TestCase
 {
-    private static $dbName;
-    private static $client;
+    private static $collection;
     private static $service;
+    private static $listName;
 
     public static function setUpBeforeClass()
     {
-        self::$dbName = getenv("MONGODB_DBNAME");
+        $dbName = getenv("MONGODB_DBNAME");
         $dbUri = getenv("MONGODB_URI");
-        self::$client = new Client($dbUri);
-        self::$service = new MongoDbCollectionStore($dbUri, self::$dbName);
-        self::resetDb();
+        $client = new Client($dbUri);
+        self::$listName = "/test/";
+        self::$collection = $client->{$dbName}->{self::$listName};
+        self::$service = new MongoDbCollectionStore($dbUri, $dbName);
+        self::reset();
+    }
+
+    public function setUp()
+    {
+        self::$collection->drop();
+        self::$collection->insertMany([
+            ["foo" => "bar"]
+        ]);
     }
 
     public function tearDown()
     {
-        self::resetDb();
+        self::reset();
     }
 
-    private static function resetDb()
+    private static function reset()
     {
-        self::$client->{self::$dbName}->drop();
+        self::$collection->drop();
     }
 
-    public function testCreateNewList()
+    public function testFetchAList()
     {
-        $document = ["list" => [
-            ["foo" => "bar"]
-        ]];
-        $this->assertTrue(self::$service->save("some-list", $document));
-        $this->assertEquals($document, self::$service->fetch("some-list"));
+        $expect = [
+            "list" => [
+                ["foo" => "bar"]
+            ]
+        ];
+        $this->assertEquals($expect, self::$service->fetch(self::$listName));
     }
 
     //public function testReplaceObject()
@@ -50,21 +61,21 @@ class MongoDbCollectionStoreTest extends TestCase
 
     public function testRetrieveNonexistentObject()
     {
-        $document = ["list" => [ ]];
-        $this->assertEquals($document, self::$service->fetch("some-list"));
+        $expected = [
+            "list" => []
+        ];
+        $this->assertEquals($expected, self::$service->fetch("/some-list/"));
     }
 
-    public function testDeleteObject()
-    {
-        $document = ["list" => [
-            ["foo" => "bar"]
-        ]];
+    //public function testDeleteObject()
+    //{
+        //$this->assertTrue(self::$service->delete(self::$listName));
 
-        $this->assertTrue(self::$service->save("some-list", $document));
-        $this->assertTrue(self::$service->delete("some-list"));
-        $document = ["list" => [ ]];
-        $this->assertEquals($document, self::$service->fetch("some-list"));
-    }
+        //$expected = [
+            //"list" => []
+        //];
+        //$this->assertEquals($expected, self::$service->fetch(self::$listName));
+    //}
 
     public function testGetStats()
     {
