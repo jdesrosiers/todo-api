@@ -2,6 +2,7 @@
 
 use JDesrosiers\HypermediaTasks\MongoDbCollectionStore;
 use JDesrosiers\HypermediaTasks\MongoDbStore;
+use JDesrosiers\Resourceful\Controller\DeleteResourceController;
 use JDesrosiers\Resourceful\Controller\GetResourceController;
 use JDesrosiers\Resourceful\CrudControllerProvider\CrudControllerProvider;
 use JDesrosiers\Resourceful\FileCache\FileCache;
@@ -9,9 +10,6 @@ use JDesrosiers\Resourceful\IndexControllerProvider\IndexControllerProvider;
 use JDesrosiers\Resourceful\Resourceful;
 use JDesrosiers\Resourceful\ResourcefulServiceProvider\ResourcefulServiceProvider;
 use JDesrosiers\Resourceful\SchemaControllerProvider\SchemaControllerProvider;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\ServiceUnavailableHttpException;
 
 require __DIR__ . "/vendor/autoload.php";
 
@@ -41,6 +39,7 @@ $app->get("/task/", new GetResourceController($taskListData))
     ->after(function() use ($app) {
         $app["json-schema.describedBy"] = "/schema/task-list";
     });
+$app->delete("/task/", new DeleteResourceController($taskListData));
 
 // Initialize CORS support
 $app["cors-enabled"]($app);
