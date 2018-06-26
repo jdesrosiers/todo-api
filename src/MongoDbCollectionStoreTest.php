@@ -9,16 +9,14 @@ class MongoDbCollectionStoreTest extends TestCase
 {
     private static $collection;
     private static $service;
-    private static $listName;
 
     public static function setUpBeforeClass()
     {
         $dbName = getenv("MONGODB_DBNAME");
         $dbUri = getenv("MONGODB_URI");
         $client = new Client($dbUri);
-        self::$listName = "/test/";
-        self::$collection = $client->{$dbName}->{self::$listName};
-        self::$service = new MongoDbCollectionStore($dbUri, $dbName);
+        self::$collection = $client->{$dbName}->test;
+        self::$service = new MongoDbCollectionStore($dbUri, $dbName, "test");
         self::reset();
     }
 
@@ -26,12 +24,12 @@ class MongoDbCollectionStoreTest extends TestCase
     {
         self::$collection->drop();
         self::$collection->insertMany([
-            ["aaa" => 111],
-            ["bbb" => 222],
-            ["ccc" => 333],
-            ["ddd" => 444],
-            ["eee" => 555],
-            ["fff" => 666]
+            ["list" => "test", "aaa" => 111],
+            ["list" => "test", "bbb" => 222],
+            ["list" => "test", "ccc" => 333],
+            ["list" => "test", "ddd" => 444],
+            ["list" => "test", "eee" => 555],
+            ["list" => "test", "fff" => 666]
         ]);
     }
 
@@ -48,33 +46,35 @@ class MongoDbCollectionStoreTest extends TestCase
     public function testFetchTheFirstPageOfItems()
     {
         $expect = [
+            "id" => "test",
             "list" => [
-                ["aaa" => 111],
-                ["bbb" => 222],
-                ["ccc" => 333],
-                ["ddd" => 444],
-                ["eee" => 555]
+                ["list" => "test", "aaa" => 111],
+                ["list" => "test", "bbb" => 222],
+                ["list" => "test", "ccc" => 333],
+                ["list" => "test", "ddd" => 444],
+                ["list" => "test", "eee" => 555]
             ],
             "page" => 0,
             "limit" => 5,
             "nextPage" => 1
         ];
-        $this->assertEquals($expect, self::$service->fetch(self::$listName . "?page=0&limit=5"));
+        $this->assertEquals($expect, self::$service->fetch("/tasks/test?page=0&limit=5"));
     }
 
     public function testFetchTheSecondPageOfItems()
     {
         $expect = [
+            "id" => "test",
             "list" => [
-                ["eee" => 555],
-                ["fff" => 666]
+                ["list" => "test", "eee" => 555],
+                ["list" => "test", "fff" => 666]
             ],
             "page" => 1,
             "limit" => 4,
             "nextPage" => 2,
             "prevPage" => 0
         ];
-        $this->assertEquals($expect, self::$service->fetch(self::$listName . "?page=1&limit=4"));
+        $this->assertEquals($expect, self::$service->fetch("/tasks/test?page=1&limit=4"));
     }
 
     //public function testReplaceObject()
@@ -89,17 +89,18 @@ class MongoDbCollectionStoreTest extends TestCase
     public function testRetrieveNonexistentObject()
     {
         $expected = [
+            "id" => "some-list",
             "list" => [],
             "page" => 0,
             "limit" => 5,
             "nextPage" => 1
         ];
-        $this->assertEquals($expected, self::$service->fetch("/some-list/?page=0&limit=5"));
+        $this->assertEquals($expected, self::$service->fetch("/tasks/some-list?page=0&limit=5"));
     }
 
     public function testDeleteObject()
     {
-        $this->assertTrue(self::$service->delete(self::$listName . "?page=0&limit=5"));
+        $this->assertTrue(self::$service->delete("/tasks/test?page=0&limit=5"));
         $this->assertEquals(1, self::$collection->count());
     }
 

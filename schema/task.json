@@ -7,10 +7,11 @@
             "links": [{ "rel": "full", "href": "/task/{$}" }],
             "readOnly": true
         },
+        "list": { "type": "string", "default": "default" },
         "completed": { "type": "boolean", "default": false },
         "text": { "type": "string" }
     },
-    "required": ["text", "completed"],
+    "required": ["list", "completed", "text"],
     "links": [
         { "rel": "self", "href": "/task/{id}" },
         {
@@ -27,7 +28,7 @@
         {
             "title": "Tasks",
             "rel": "instances",
-            "href": "/task/",
+            "href": "/tasks/{list}",
             "schema": { "$ref": "/schema/task-search" }
         }
     ]

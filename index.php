@@ -2,8 +2,6 @@
 
 use JDesrosiers\HypermediaTasks\MongoDbCollectionStore;
 use JDesrosiers\HypermediaTasks\MongoDbStore;
-use JDesrosiers\Resourceful\Controller\DeleteResourceController;
-use JDesrosiers\Resourceful\Controller\GetResourceController;
 use JDesrosiers\Resourceful\CrudControllerProvider\CrudControllerProvider;
 use JDesrosiers\Resourceful\FileCache\FileCache;
 use JDesrosiers\Resourceful\IndexControllerProvider\IndexControllerProvider;
@@ -31,15 +29,11 @@ $app->flush();
 $app->mount("/", new IndexControllerProvider($static));
 
 // Register Controllers
-$taskData = new MongoDbStore($dbUri, $dbname, "/task/");
+$taskData = new MongoDbStore($dbUri, $dbname, "task");
 $app->mount("/task", new CrudControllerProvider("task", $taskData));
 
-$taskListData = new MongoDbCollectionStore($dbUri, $dbname);
-$app->get("/task/", new GetResourceController($taskListData))
-    ->after(function() use ($app) {
-        $app["json-schema.describedBy"] = "/schema/task-list";
-    });
-$app->delete("/task/", new DeleteResourceController($taskListData));
+$taskListData = new MongoDbCollectionStore($dbUri, $dbname, "task");
+$app->mount("/tasks", new CrudControllerProvider("task-list", $taskListData));
 
 // Initialize CORS support
 $app["cors-enabled"]($app);

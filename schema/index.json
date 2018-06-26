@@ -11,7 +11,7 @@
         {
             "title": "List Tasks",
             "rel": "https://hypermedia-todo.herokuapp.com/rel/task",
-            "href": "/task/",
+            "href": "/tasks/default",
             "schema": { "$ref": "/schema/task-search" }
         },
         {

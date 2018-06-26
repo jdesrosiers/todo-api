@@ -2,6 +2,7 @@
     "$schema": "http://json-schema.org/draft-04/hyper-schema",
     "type": "object",
     "properties": {
+        "id": { "type": "string" },
         "list": {
             "type": "array",
             "items": { "$ref": "/schema/task" }
@@ -12,9 +13,9 @@
         "prevPage": { "type": "integer", "readOnly": true }
     },
     "links": [
-        { "rel": "self", "href": "/task/{?page,limit}" },
-        { "title": "Delete", "rel": "delete", "href": "/task/{?page,limit}" },
-        { "rel": "previous", "href": "/task/?page={prevPage}{&limit}" },
-        { "rel": "next", "href": "/task/?page={nextPage}{&limit}" }
+        { "rel": "self", "href": "/tasks/{id}{?page,limit}" },
+        { "title": "Delete", "rel": "delete", "href": "/tasks/{id}{?page,limit}" },
+        { "rel": "previous", "href": "/tasks/{id}?page={prevPage}{&limit}" },
+        { "rel": "next", "href": "/tasks/{id}?page={nextPage}{&limit}" }
     ]
 }
