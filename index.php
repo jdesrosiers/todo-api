@@ -12,7 +12,7 @@ use JDesrosiers\Resourceful\SchemaControllerProvider\SchemaControllerProvider;
 require __DIR__ . "/vendor/autoload.php";
 
 $app = new Resourceful();
-$app["debug"] = true;
+//$app["debug"] = true;
 $app["cors.exposeHeaders"] = "allow, if-modified-since, link, location";
 
 $app->register(new ResourcefulServiceProvider(), [

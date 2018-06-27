@@ -7,7 +7,11 @@
             "links": [{ "rel": "full", "href": "/task/{$}" }],
             "readOnly": true
         },
-        "list": { "type": "string", "default": "default" },
+        "list": {
+            "type": "string",
+            "default": "default",
+            "readOnly": true
+        },
         "completed": { "type": "boolean", "default": false },
         "text": { "type": "string" }
     },
@@ -19,9 +23,9 @@
             "rel": "edit",
             "href": "/task/{id}",
             "_encType_": [
-                "application/json",
                 "application/json-patch+json",
-                "application/merge-patch+json"
+                "application/merge-patch+json",
+                "application/json"
             ]
         },
         { "title": "Delete", "rel": "delete", "href": "/task/{id}" },

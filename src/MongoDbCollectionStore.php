@@ -4,6 +4,7 @@ namespace JDesrosiers\HypermediaTasks;
 
 use Doctrine\Common\Cache\Cache;
 use MongoDB\Client;
+use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
 class MongoDbCollectionStore implements Cache
 {
@@ -46,13 +47,32 @@ class MongoDbCollectionStore implements Cache
 
     public function save($id, $data, $lifeTime = null)
     {
-        //$this->db->dropCollection($id);
-        //foreach ($data["list"] as $item) {
-            //$this->db->$id->replaceOne(["_id" => $item["id"]], $item, ["upsert" => true]);
-        //}
+        $args = $this->parseId($id);
+        $filter = ["list" => $args["list"]];
+        $options = ["limit" => $args["limit"], "skip" => $args["skip"]];
+        $list = $this->collection->find($filter, $options);
 
-        //return true;
-        return false;
+        $message = "Could not process edit request. Bulk edits do not " .
+                   "support adding, removing, or reordering items";
+        $operations = [];
+        foreach ($list as $ndx => $item) {
+            if ($item->id !== $data->list[$ndx]->id) {
+                throw new UnprocessableEntityHttpException($message);
+            }
+
+            $operations[] = [
+                "replaceOne" => [
+                    ["id" => $item->id],
+                    $data->list[$ndx]
+                ]
+            ];
+        }
+
+        if (count($operations) !== count($data->list)) {
+            throw new UnprocessableEntityHttpException($message);
+        }
+
+        return $this->collection->bulkWrite($operations)->isAcknowledged();
     }
 
     public function delete($id)
@@ -60,13 +80,17 @@ class MongoDbCollectionStore implements Cache
         $args = $this->parseId($id);
         $filter = ["list" => $args["list"]];
         $options = ["skip" => $args["skip"], "limit" => $args["limit"]];
+        $list = $this->collection->find($filter, $options);
 
-        $list = $this->collection->find($filter, $options)->toArray();
-        foreach ($list as $item) {
-            $this->collection->deleteOne(["_id" => $item["_id"]]);
-        }
+        $operations = array_map(function ($item) {
+            return [
+                "deleteOne" => [
+                    ["_id" => $item["_id"]],
+                ]
+            ];
+        }, $list->toArray());
 
-        return true;
+        return $this->collection->bulkWrite($operations)->isAcknowledged();
     }
 
     public function getStats()
