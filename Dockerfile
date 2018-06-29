@@ -1,11 +1,11 @@
-FROM php:7.2.6-cli
+FROM composer:1.6.5 AS composer
 
-RUN apt-get update && apt-get install -y git zlib1g-dev
-RUN docker-php-ext-install zip
-RUN pecl install mongodb
-RUN echo "extension=mongodb.so" > /usr/local/etc/php/conf.d/docker-php-ext-mongodb.ini
+FROM php:7.2.6
+COPY --from=composer /usr/bin/composer /usr/bin/composer
 
-RUN curl -sS https://getcomposer.org/installer | php && mv composer.phar /usr/bin/composer
+RUN apt-get update && apt-get install -y zlib1g-dev && docker-php-ext-install zip
+RUN pecl install mongodb && docker-php-ext-enable mongodb
+RUN apt-get update && apt-get install -y git
 
 COPY . /app
 
