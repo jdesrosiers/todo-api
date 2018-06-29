@@ -9,8 +9,7 @@
         },
         "list": {
             "type": "string",
-            "default": "default",
-            "readOnly": true
+            "default": "default"
         },
         "completed": { "type": "boolean", "default": false },
         "text": { "type": "string" }
