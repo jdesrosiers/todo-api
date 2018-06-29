@@ -161,9 +161,9 @@ is often a program) a consistent and unambiguous handle to work with.
 The other interesting part of this example is the use of `rel` "edit" and
 `schema` together. When using "edit", the target schema that our request must
 conform to is the schema of the document being edited. But, including the
-`schema` keyword also means that the request must conform to that schema. It's
-not clear whether the `schema` keyword should be an override for the schema the
-request must conform to or in addition to the schema the request must conform
-to. If it's the later, we have a solution for supporting operations! The
-`schema` keyword would then serve to constrain the general "edit" operation into
-a more specific "complete-task" operation.
+`schema` keyword also means that the request must conform to that schema.
+Jsonary gives the `schema` keyword priority and overrides the behavior defined
+for the "edit" relation. However, if requests had to validate against both the
+current schema *and* the `schema` schema, we have a solution for supporting
+operations! The `schema` keyword in the example would then serve to constrain
+the general "edit" operation into a more specific "complete-task" operation.
