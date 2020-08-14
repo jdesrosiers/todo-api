@@ -8,9 +8,9 @@ services:
     build:
       context: .
     volumes:
-      - .:/app
-      - vendor:/app/vendor
-      - ./vendor:/for_docker_host/vendor
+      - .:/app:z
+      - vendor:/app/vendor:z
+      - ./vendor:/for_docker_host/vendor:z
     depends_on:
       - mongodb
     ports:
